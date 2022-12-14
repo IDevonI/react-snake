@@ -1,0 +1,36 @@
+.board {
+    display: flex;
+    position: relative;
+    width: 500px;
+    height: 500px;
+    background-color: wheat;
+    z-index: 0;
+}
+
+.snake-block {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background-color: green;
+    border: 2px solid rgb(0, 0, 0);
+    z-index: 2;
+}
+
+.snake-food {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(128, 0, 0);
+    z-index: 1;
+}
+
+.score {
+    display: flex;
+    position: relative;
+    z-index: 3;
+    color: green;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 50px;
+    margin-bottom: 50px;
+
+}
