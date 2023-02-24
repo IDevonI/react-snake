@@ -1,36 +1,62 @@
+.board-container {
+  padding: auto;
+}
+
 .board {
-    display: flex;
-    position: relative;
-    width: 500px;
-    height: 500px;
-    background-color: wheat;
-    z-index: 0;
+  display: flex;
+  position: relative;
+  width: 500px;
+  height: 500px;
+  background-color: wheat;
+  z-index: 1;
 }
 
 .snake-block {
-    position: absolute;
-    width: 48px;
-    height: 48px;
-    background-color: green;
-    border: 2px solid rgb(0, 0, 0);
-    z-index: 2;
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background-color: green;
+  border: 1px solid wheat;
+  z-index: 3;
 }
 
 .snake-food {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: rgb(128, 0, 0);
-    z-index: 1;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(128, 0, 0);
+  z-index: 2;
 }
 
-.score {
-    display: flex;
-    position: relative;
-    z-index: 3;
-    color: green;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 50px;
-    margin-bottom: 50px;
+.container {
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  margin: 20px;
+}
 
+.content {
+  margin: 2.5px;
+}
+
+.on-top {
+  position: relative;
+  top: -250px;
+  padding-left: 11.5px;
+  transform: translateY(-50%);
+  z-index: 4;
+}
+
+.faded {
+  filter: brightness(20%);
+}
+
+.blink {
+  animation: blinking 1s linear infinite;
+}
+
+@keyframes blinking {
+  50% {
+    opacity: 0;
+  }
 }

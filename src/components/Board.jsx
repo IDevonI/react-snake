@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import useInterval from 'use-interval'
 import Block from "./Block";
-import Snake from "./Snake";
+import TextRenderer from "react-pixel-text-renderer";
 
 export default function Board(props) {
 
     const [snake, setSnake] = useState([new Block(0, 0)]);
+    const [gameStatus, setGameStatus] = useState(1);
     const [snakeDirection, setSnakeDirection] = useState(0);
     const [snack, setSnack] = useState(new Block(0, 0));
     const [boardSize, setBoardSize] = useState(10);
@@ -40,7 +41,7 @@ export default function Board(props) {
             case 1:
                 if (snake[snake.length - 1].y < (boardSize - 1)) {
                     newBlock = new Block(snake[snake.length - 1].x, snake[snake.length - 1].y + 1);
-                } else{
+                } else {
                     inside = false
                     gameOver();
                 }
@@ -48,7 +49,7 @@ export default function Board(props) {
             case 2:
                 if (snake[snake.length - 1].x > 0) {
                     newBlock = new Block(snake[snake.length - 1].x - 1, snake[snake.length - 1].y);
-                } else{
+                } else {
                     inside = false
                     gameOver();
                 }
@@ -56,7 +57,7 @@ export default function Board(props) {
             case 3:
                 if (snake[snake.length - 1].y > 0) {
                     newBlock = new Block(snake[snake.length - 1].x, snake[snake.length - 1].y - 1);
-                } else{
+                } else {
                     inside = false
                     gameOver();
                 }
@@ -112,16 +113,33 @@ export default function Board(props) {
 
     const gameOver = () => {
         setMovementDelay(null);
-        window.alert('GameOver')
+        setGameStatus(0);
+        props.gameOver();
     }
 
     return (
-        <div className="board">
-            <div className="snake-food" style={{ top: `${snack.y * 10}%`, left: `${snack.x * 10}%` }} />
+        <div className='board-container'>
+            <div className={gameStatus ? 'board' : 'board faded'}>
+                <div className="snake-food" style={{ top: `${snack.y * 10}%`, left: `${snack.x * 10}%` }} />
+                {
+                    snake.map((s, id) =>
+                        <div key={id} className="snake-block" style={{ top: `${s.y * 10}%`, left: `${s.x * 10}%` }}></div>
+                    )
+                }
+            </div>
             {
-                snake.map((s, id) =>
-                    <div key={id} className="snake-block" style={{ top: `${s.y * 10}%`, left: `${s.x * 10}%` }}></div>
-                )
+                gameStatus === 0 ?
+                    <div className="blink on-top">
+                        <TextRenderer
+                            color={[0, 128, 0]}
+                            text={"GAME OVER"}
+                            scale={9}
+                            charSpaces={9}
+                            animate={true}
+                        />
+                    </div>
+                    :
+                    null
             }
         </div>
     )
