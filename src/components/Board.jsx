@@ -71,7 +71,9 @@ export default function Board(props) {
                 generateSnack();
                 props.updateScore(snake.length);
             }
-            else {
+            else if (isBittingItSelf(newBlock)) {
+                gameOver();
+            } else {
                 setSnake([...snake.slice(1), newBlock])
             }
         }
@@ -89,6 +91,14 @@ export default function Board(props) {
         for (let s in snake)
             if (snake[s].x === snack.x && snake[s].y === snack.y)
                 return true;
+        return false;
+    }
+
+    const isBittingItSelf = (newBlock) => {
+        for (let s in snake) {
+            if (snake[s].x === newBlock.x && snake[s].y === newBlock.y)
+                return true;
+        }
         return false;
     }
 
@@ -117,13 +127,44 @@ export default function Board(props) {
         props.gameOver();
     }
 
+    const snakeSkin = (idx, gameStatus) => {
+        let skin = 'snake-body ';
+        if (idx === snake.length - 1) {
+            switch (snakeDirection) {
+                case 0:
+                    skin += 'snake-head-right';
+                    break;
+                case 1:
+                    skin += 'snake-head-down';
+                    break;
+                case 2:
+                    skin += 'snake-head-left';
+                    break;
+                case 3:
+                    skin += 'snake-head-up';
+                    break;
+                default:
+                    skin += 'snake-head-right';
+                    break;
+            }
+        }
+        if (gameStatus === 0) {
+            skin += ' blink';
+        }
+        return skin;
+    }
+
     return (
         <div className='board-container'>
             <div className={gameStatus ? 'board' : 'board faded'}>
                 <div className="snake-food" style={{ top: `${snack.y * 10}%`, left: `${snack.x * 10}%` }} />
                 {
-                    snake.map((s, id) =>
-                        <div key={id} className="snake-block" style={{ top: `${s.y * 10}%`, left: `${s.x * 10}%` }}></div>
+                    snake.map((s, idx) =>
+                        <div
+                            key={idx}
+                            className={snakeSkin(idx, gameStatus)}
+                            style={{ top: `${s.y * 10}%`, left: `${s.x * 10}%` }}
+                        />
                     )
                 }
             </div>
@@ -139,7 +180,7 @@ export default function Board(props) {
                         />
                     </div>
                     :
-                    null
+                    <div />
             }
         </div>
     )

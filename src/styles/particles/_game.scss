@@ -1,5 +1,6 @@
 .board-container {
   padding: auto;
+  height: 545px;
 }
 
 .board {
@@ -11,13 +12,29 @@
   z-index: 1;
 }
 
-.snake-block {
+.snake-body {
   position: absolute;
   width: 48px;
   height: 48px;
   background-color: green;
   border: 1px solid wheat;
   z-index: 3;
+}
+
+.snake-head-up {
+  clip-path: polygon(50% 0, 100% 50%, 100% 100%, 0 100%, 0 50%);
+}
+
+.snake-head-down {
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.snake-head-left {
+  clip-path: polygon(0 50%, 50% 0, 100% 0, 100% 100%, 50% 100%);
+}
+
+.snake-head-right {
+  clip-path: polygon(0 0, 50% 0, 100% 50%, 50% 100%, 0 100%);
 }
 
 .snake-food {
@@ -30,7 +47,7 @@
 
 .container {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   align-items: center;
   margin: 20px;
 }
