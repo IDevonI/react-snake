@@ -32,7 +32,7 @@ export default function Board(props) {
             setMovementDelay(props.delay);
             generateSnack();
         }, 3000)
-    }, [])
+    }, [props])
 
     useEffect(() => {
         if (countdown > 0)
